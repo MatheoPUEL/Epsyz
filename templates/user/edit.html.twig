@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier votre profil | Epsyz{% endblock %}
+
+{% block body %}
+
+    <div class="container mt-4">
+
+        <h1>Edit</h1>
+            {% if id is defined %}
+                <a href="{{ path('app_user', {id}) }}">Retourner sur mon profil</a>
+            {% endif %}
+        {{ form_start(fromUpdate) }}
+            {{ form_rest(fromUpdate) }}
+        {{ form_end(fromUpdate) }}
+    </div>
+
+{% endblock %}
