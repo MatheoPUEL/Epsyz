@@ -5,14 +5,95 @@
 {% block body %}
 
     <div class="container mt-4">
-
-        <h1>Edit</h1>
+        <div class="card p-4 mb-4">
+            <h1>Mes informations</h1>
             {% if id is defined %}
                 <a href="{{ path('app_user', {id}) }}">Retourner sur mon profil</a>
             {% endif %}
-        {{ form_start(fromUpdate) }}
-            {{ form_rest(fromUpdate) }}
-        {{ form_end(fromUpdate) }}
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success alert-dismissible fade show">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            {{ form_start(form_update) }}
+            {{ form_rest(form_update) }}
+            <button type="submit" class="btn btn-primary">Modifier mon profil</button>
+            {{ form_end(form_update) }}
+        </div>
+
+        <div class="card p-4 mb-4">
+            <h1>Image de profil</h1>
+            {% for message in app.flashes('success_avatar') %}
+                <div class="alert alert-success alert-dismissible fade show">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            <p>Image actuelle: {{ user.avatartoken }}</p>
+            <div class="input-group">
+                {{ form_start(form_update_avatar) }}
+                    {{ form_rest(form_update_avatar) }}
+                    <button class="btn btn-primary" type="submit">Valider la modification</button>
+                {{ form_end(form_update_avatar) }}
+                <img alt="" width="100" src="/uploads/avatar/{{ user.avatartoken }}" class="avatar avatar-sm rounded-circle me-2">
+
+                <form method="post" action="{{ path('app_user_delete', { id: user.id } ) }}" style="display: inline-block">
+                    <input type="hidden" name="_method" value="POST">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete_picture' ~ user.id) }}">
+                    <button class="btn btn-danger btn-sm btn-square me-1">
+                        <i class="fa-solid fa-trash"></i>
+                        supprimer
+                    </button>
+                </form>
+
+            </div>
+        </div>
+
+        <div class="card p-4 mb-4">
+            <h1>Mot de passe</h1>
+            {% for message in app.flashes('success_pass') %}
+                <div class="alert alert-success alert-dismissible fade show">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {{ form_start(form_update_pass) }}
+            {{ form_rest(form_update_pass) }}
+            <button type="submit" class="btn btn-primary">Modifier mon mot de passe</button>
+            {{ form_end(form_update_pass) }}
+        </div>
+
+        <div class="card p-4 mb-4">
+            <h1>Suppression du compte</h1>
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Supprimer mon compte
+            </button>
+
+            <!-- Modal -->
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Suppression du compte</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Valider la suppression !
+                        </div>
+                        <div class="modal-footer">
+                            <div class="d-grid gap-2">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                <button type="button" class="btn btn-danger">Supprimer définitivement</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
 {% endblock %}

@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
 
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -39,9 +40,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
     private $first_name;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
     private $last_name;
 
     #[ORM\Column(type: 'datetime_immutable')]
@@ -49,6 +52,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'datetime_immutable')]
     private $updated_at;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $AvatarToken;
 
     public function getId(): ?int
     {
@@ -164,6 +170,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdatedAt(\DateTimeImmutable $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getAvatarToken()
+    {
+        return $this->AvatarToken;
+    }
+
+    public function setAvatarToken($AvatarToken)
+    {
+        $this->AvatarToken = $AvatarToken;
 
         return $this;
     }
