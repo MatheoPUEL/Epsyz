@@ -35,16 +35,19 @@
                     {{ form_rest(form_update_avatar) }}
                     <button class="btn btn-primary" type="submit">Valider la modification</button>
                 {{ form_end(form_update_avatar) }}
-                <img alt="" width="100" src="/uploads/avatar/{{ user.avatartoken }}" class="avatar avatar-sm rounded-circle me-2">
+                <img alt="{{ user.firstname }} {{ user.lastname }}" width="100" height="100" src="/uploads/avatar/{{ user.avatartoken }}" class="avatar avatar-sm rounded-circle me-2">
 
-                <form method="post" action="{{ path('app_user_delete', { id: user.id } ) }}" style="display: inline-block">
-                    <input type="hidden" name="_method" value="POST">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete_picture' ~ user.id) }}">
-                    <button class="btn btn-danger btn-sm btn-square me-1">
-                        <i class="fa-solid fa-trash"></i>
-                        supprimer
-                    </button>
-                </form>
+                {% if user.avatartoken != 'default.png' %}
+                    <form method="post" action="{{ path('app_user_delete', { id: user.id } ) }}" style="display: inline-block">
+                        <input type="hidden" name="_method" value="POST">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete_picture' ~ user.id) }}">
+                        <button class="btn btn-danger btn-sm btn-square me-1">
+                            <i class="fa-solid fa-trash"></i>
+                            supprimer
+                        </button>
+                    </form>
+                {% endif %}
+
 
             </div>
         </div>

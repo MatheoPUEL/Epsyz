@@ -33,19 +33,38 @@ class AccountController extends AbstractController
     }
 
     #[Route('/profil/delete/{id}', name:'app_user_delete', methods: ['POST'])]
-    public function delete(User $user, Request $request): Response
+    public function delete( Request $request, ManagerRegistry $em): Response
     {
-        if ($this->isCsrfTokenValid('delete_picture' . $user->getId(), $request->get('_token'))) {
-            $sa = $user->getAvatarToken();
-            $filesystem = new Filesystem();
-            $filesystem->mkdir('/public/uploads/avatar/', 0700);
-            $filesystem->remove(['dir', '/public/uploads/avatar/', $user->getAvatarToken()]);
+        if ($this->getUser()) {
+            $userInfos = $this->getUser();
+            $id = $userInfos->getId();
+            $user = $this->em->getRepository(User::class)->find($id);
 
-            return new Response('L\'image a bien été sup ' . $sa);
-        } else {
-            return $this->redirectToRoute('app_home');
+            // Permet la suppresion de l'avatar.
+            if ($this->isCsrfTokenValid('delete_picture' . $userInfos->getId(), $request->get('_token'))) {
+
+                if ($userInfos->getAvatarToken() != "default.png") {
+                    $path = "uploads/avatar/" . $userInfos->getAvatarToken();
+                    if (!unlink($path)) {
+                        return $this->redirectToRoute('app_user_edit');
+                    } else {
+                        $user->setAvatarToken('default.png');
+                        $this->em->persist($user);
+                        $this->em->flush();
+                        $this->addFlash('success_avatar', 'Votre imge de profil a bien été supprimer.');
+                        return $this->redirectToRoute('app_user_edit');
+                    }
+                }
+
+
+            } else {
+                return $this->redirectToRoute('app_home');
+            }
+
+
+            return $this->redirectToRoute('app_login');
         }
-
+        return $this->redirectToRoute('app_home');
     }
 
     #[Route('/profil/edit', name: 'app_user_edit')]
@@ -96,14 +115,12 @@ class AccountController extends AbstractController
             $formUpdateAvatar->handleRequest($request);
 
             if ($formUpdateAvatar->isSubmitted() && $formUpdateAvatar->isValid()) {
-
-                    $file = $user->getAvatarToken();
+                    $file = $formUpdateAvatar->get('AvatarToken')->getData();
                     $uniqid = md5(uniqid());
                     $fileName = $uniqid.'.'.$file->guessExtension();
                     $file->move($this->getParameter('avatar_directory'), $fileName);
                     $user->setAvatarToken($fileName);
 
-                    $user->setAvatarToken($fileName);
                     $this->em->persist($user);
                     $this->em->flush();
                     $this->addFlash('success_avatar', 'Votre image de profil a bien été modifé.');
