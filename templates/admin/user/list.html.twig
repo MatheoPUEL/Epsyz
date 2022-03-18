@@ -1,0 +1,52 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %}Admin / utilisateurs | Epsyz{% endblock %}
+
+{% block body %}
+    <style>
+        .valid {
+            color: green;
+        }
+        .not {
+            color: red;
+        }
+    </style>
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Avatar</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+                <th>Valid</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td><img height="35" width="35" class="avatar avatar-sm rounded-circle me-2" src="/uploads/avatar/{{ user.avatartoken }}" alt=""></td>
+                    <td>{{ user.lastname }}</td>
+                    <td>{{ user.firstname }}</td>
+                    <td>{{ user.email }}</td>
+                    <td><i class="fa-solid fa-circle-check valid"></i> <i class="fa-solid fa-circle-xmark not"></i></td>
+                    <td><a href="{{ path('app_admin_user_show', { id: user.id } ) }}" class="btn-primary btn btn-sm">Modifer</a>
+
+                        <form method="post" action="{{ path('app_admin_user_delete', { id: user.id} ) }}" style="display: inline-block">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete_user' ~ user.id) }}">
+                            <button class="btn btn-danger btn-sm btn-square btn-neutral me-1">
+                                <i class="fa-solid fa-trash"></i>
+                                Supprimer
+                            </button>
+                        </form>
+                </tr>
+            {% endfor %}
+
+
+            </tbody>
+
+        </table>
+    </div>
+
+{% endblock %}

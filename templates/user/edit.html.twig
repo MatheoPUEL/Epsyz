@@ -7,6 +7,8 @@
     <div class="container mt-4">
         <div class="card p-4 mb-4">
             <h1>Mes informations</h1>
+            <p>Dernnière modification le {{ user.updatedat|date("d/m/Y") }} a {{ user.updatedat|date("H:i") }}</p>
+
             {% if id is defined %}
                 <a href="{{ path('app_user', {id}) }}">Retourner sur mon profil</a>
             {% endif %}
@@ -29,7 +31,7 @@
                     {{ message }}
                 </div>
             {% endfor %}
-            <p>Image actuelle: {{ user.avatartoken }}</p>
+
             <div class="input-group">
                 {{ form_start(form_update_avatar) }}
                     {{ form_rest(form_update_avatar) }}

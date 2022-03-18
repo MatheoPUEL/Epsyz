@@ -1,0 +1,32 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %}Admin / Edition | Epsyz{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {% for message in app.flashes('success_avatar') %}
+            <div class="alert alert-success alert-dismissible fade show">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {{ form_start(form) }}
+            {{ form_rest(form) }}
+            <button class="btn btn-primary" type="submit">Valider les modifications</button>
+
+        {{ form_end(form) }}
+
+        <img height="150" width="150" class="avatar avatar-sm rounded-circle me-2" src="/uploads/avatar/{{ user.avatartoken }}" alt="">
+
+        {% if user.avatartoken != 'default.png' %}
+            <form method="post" action="{{ path('app_admin_avatar_delete', { id: user.id } ) }}" style="display: inline-block">
+                <input type="hidden" name="_method" value="POST">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete_picture' ~ user.id) }}">
+                <button class="btn btn-danger btn-sm btn-square me-1">
+                    <i class="fa-solid fa-trash"></i>
+                    Supprimer l'avatar
+                </button>
+            </form>
+        {% endif %}
+    </div>
+
+
+{% endblock %}

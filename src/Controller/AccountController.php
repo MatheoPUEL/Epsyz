@@ -49,6 +49,7 @@ class AccountController extends AbstractController
                         return $this->redirectToRoute('app_user_edit');
                     } else {
                         $user->setAvatarToken('default.png');
+                        $user->setUpdatedAt(new \DateTimeImmutable('now'));
                         $this->em->persist($user);
                         $this->em->flush();
                         $this->addFlash('success_avatar', 'Votre imge de profil a bien été supprimer.');

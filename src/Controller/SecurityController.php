@@ -31,6 +31,7 @@ class SecurityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
+            $user->setAvatarToken("default.png");
             $user->setCreatedAt(new \DateTimeImmutable('now'));
             $user->setUpdatedAt(new \DateTimeImmutable('now'));
             $user->setPassword(

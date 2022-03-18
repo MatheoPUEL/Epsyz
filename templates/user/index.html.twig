@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}Profil de {{ user.firstname }} {{ user.lastname }} | Epsyz{% endblock %}
 
 {% block body %}
@@ -11,7 +12,10 @@
         {% if id is defined %}
 
             {% if user.id == id %}
-                <a href="{{ path('app_user_edit') }}">Editer mon profil</a>
+                <a href="{{ path('app_user_edit') }}">Editer mon profil</a> <br>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('app_admin') }}">Page admin</a>
+                {% endif %}
             {% endif %}
 
         {% else %}
