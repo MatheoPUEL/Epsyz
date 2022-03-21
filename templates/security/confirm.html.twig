@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmation | Epsyz{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {% if user.confirme == 0%}
+            Recevoir un email pour confirmer votre compte
+
+
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            <form method="post" action="{{ path('app_confirm_account') }}" style="display: inline-block">
+                <input type="hidden" name="_method" value="POST">
+                <input type="hidden" name="_token" value="{{ csrf_token('send_confirmation') }}">
+                <button class="">
+                    Envoyer
+                </button>
+            </form>
+
+        {% else %}
+            <h1>Votre compte est déjà été confirmé.</h1>
+        {% endif %}
+    </div>
+
+{% endblock %}

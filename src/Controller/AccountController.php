@@ -29,6 +29,7 @@ class AccountController extends AbstractController
     public function profil(ManagerRegistry $em, int $id): Response
     {
         $user = $em->getRepository(User::class)->find($id);
+        
         return $this->render('user/index.html.twig', ['user' => $user]);
     }
 
@@ -69,7 +70,7 @@ class AccountController extends AbstractController
     }
 
     #[Route('/profil/edit', name: 'app_user_edit')]
-    public function edit(Request $request, UserPasswordHasherInterface $userPasswordHasher, ManagerRegistry $em,): Response
+    public function edit(Request $request, UserPasswordHasherInterface $userPasswordHasher, ManagerRegistry $em): Response
     {
         if ($this->getUser()){
             $userInfos = $this->getUser();

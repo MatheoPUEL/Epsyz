@@ -51,7 +51,6 @@
 
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <a class="btn-primary btn btn-sm" href="{{ path('app_logout') }}">Se deconnecter</a>
-
                 {% else %}
                     <div class="btn-group" role="group" aria-label="Basic outlined example">
                         <a href="{{ path('app_login') }}" class="btn btn-outline-primary btn-sm">Connexion</a>

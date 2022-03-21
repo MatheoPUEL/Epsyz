@@ -29,7 +29,8 @@
                     <td>{{ user.lastname }}</td>
                     <td>{{ user.firstname }}</td>
                     <td>{{ user.email }}</td>
-                    <td><i class="fa-solid fa-circle-check valid"></i> <i class="fa-solid fa-circle-xmark not"></i></td>
+
+                    <td>{% if user.confirme == 0 %}<i class="fa-solid fa-circle-xmark not"></i>{% else %}<i class="fa-solid fa-circle-check valid"></i>{% endif %}</td>
                     <td><a href="{{ path('app_admin_user_show', { id: user.id } ) }}" class="btn-primary btn btn-sm">Modifer</a>
 
                         <form method="post" action="{{ path('app_admin_user_delete', { id: user.id} ) }}" style="display: inline-block">
