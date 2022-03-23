@@ -121,14 +121,26 @@ class SecurityController extends AbstractController
     }
 
     #[Route(path: '/confirmation/verifications/id={id}&token={token}', name: 'app_confirm_validation_account')]
-    public function validation(ManagerRegistry $em, int $id, string $token): Response
+    public function validation(EntityManagerInterface $entityManager, int $id, string $token): Response
     {
         $urlId = $id;
         $urlToken = $token;
 
         $userInfos = $this->getUser();
+
         $idSession = $userInfos->getId();
         $TokenSession = $userInfos->getConfirmeToken();
+
+        $user = $this->em->getRepository(User::class)->find($idSession);
+
+        if ($urlId == $idSession) {
+            $user->setConfirme(1);
+            $this->em->persist($user);
+            $this->em->flush();
+
+            $this->addFlash('success_confirme', 'Votre compte a bien été confirmée');
+            return $this->redirectToRoute('app_user_edit');
+        }
 
         return new Response('url id: ' . $urlId .'</br> url token: ' . $urlToken. '</br> id session: ' . $idSession .'</br> Token Session: ' . $TokenSession);
     }

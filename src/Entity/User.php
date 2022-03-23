@@ -56,11 +56,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255)]
     private $AvatarToken;
 
-    #[ORM\Column(type: 'integer')]
-    private $confirme;
-
     #[ORM\Column(type: 'string', length: 255)]
     private $confirme_token;
+
+    #[ORM\Column(type: 'boolean')]
+    private $confirme;
 
     public function getId(): ?int
     {
@@ -192,18 +192,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getConfirme(): ?int
-    {
-        return $this->confirme;
-    }
-
-    public function setConfirme(int $confirme): self
-    {
-        $this->confirme = $confirme;
-
-        return $this;
-    }
-
     public function getConfirmeToken(): ?string
     {
         return $this->confirme_token;
@@ -212,6 +200,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setConfirmeToken(string $confirme_token): self
     {
         $this->confirme_token = $confirme_token;
+
+        return $this;
+    }
+
+    public function getConfirme(): ?bool
+    {
+        return $this->confirme;
+    }
+
+    public function setConfirme(bool $confirme): self
+    {
+        $this->confirme = $confirme;
 
         return $this;
     }

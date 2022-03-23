@@ -5,6 +5,17 @@
 {% block body %}
 
     <div class="container mt-4">
+        {% if user.confirme == 0 %}
+            <div class="alert alert-danger">
+                Votre compte n'est pas encore actif <a href="{{ path('app_confirm_account') }}">Activez le maintenant</a>
+            </div>
+        {% endif %}
+        {% for message in app.flashes('success_confirme') %}
+            <div class="alert alert-success">
+                Votre compte a bien été activé.
+            </div>
+        {% endfor %}
+
         <div class="card p-4 mb-4">
             <h1>Mes informations</h1>
             <p>Dernnière modification le {{ user.updatedat|date("d/m/Y") }} a {{ user.updatedat|date("H:i") }}</p>
@@ -19,7 +30,7 @@
             {% endfor %}
 
             {{ form_start(form_update) }}
-            {{ form_rest(form_update) }}
+                {{ form_rest(form_update) }}
             <button type="submit" class="btn btn-primary">Modifier mon profil</button>
             {{ form_end(form_update) }}
         </div>
