@@ -15,6 +15,7 @@ class AdminUserUpdateType extends AbstractType
             ->add('email')
             ->add('first_name')
             ->add('last_name')
+            ->add('biographie')
             ->add('confirme')
         ;
     }

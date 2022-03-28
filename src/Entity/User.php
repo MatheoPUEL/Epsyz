@@ -62,6 +62,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $confirme;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $biographie;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -212,6 +215,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setConfirme(bool $confirme): self
     {
         $this->confirme = $confirme;
+
+        return $this;
+    }
+
+    public function getBiographie(): ?string
+    {
+        return $this->biographie;
+    }
+
+    public function setBiographie(?string $biographie): self
+    {
+        $this->biographie = $biographie;
 
         return $this;
     }
