@@ -1,0 +1,14 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Structures / add | Admin{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {{ form_start(form) }}
+        {{ form_rest(form) }}
+        <input type="submit" value="Enregistrer">
+        {{ form_end(form) }}
+    </div>
+
+
+{% endblock %}

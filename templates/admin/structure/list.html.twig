@@ -1,0 +1,54 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin | Structures{% endblock %}
+
+{% block body %}
+    <style>
+        .valid {
+            color: green;
+        }
+        .not {
+            color: red;
+        }
+    </style>
+<div class="container">
+    <a href="{{ path('app_admin_structure_add') }}" class="btn btn-primary">Ajouter une structure</a>
+    {% for message in app.flashes('success_structure') %}
+        <div class="alert alert-success alert-dismissible fade show mt-4">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Ville</th>
+            <th>Code postal</th>
+            <th>Adresse</th>
+            <th>Téléphone</th>
+            <th>Mail</th>
+            <th>Type</th>
+            <th>Public</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for structure in structures %}
+            <tr>
+                <td>{{ structure.name }}</td>
+                <td>{{ structure.city }}</td>
+                <td>{{ structure.postalcode }}</td>
+                <td>{{ structure.address }}</td>
+                <td>{{ structure.phone }}</td>
+                <td>{{ structure.mail }}</td>
+                <td>{{ structure.type }}</td>
+                <td>{% if structure.public == 0 %}<i class="fa-solid fa-circle-xmark not"></i>{% else %}<i class="fa-solid fa-circle-check valid"></i>{% endif %}</td>
+                <td><a href="{{ path('app_admin_structure_edit', { id: structure.id }) }}" class="btn-secondary btn btn-sm">Modifer</a></td>
+            </tr>
+        {% endfor %}
+
+
+        </tbody>
+
+{% endblock %}
