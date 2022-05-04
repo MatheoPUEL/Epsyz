@@ -73,4 +73,15 @@ class StructureController extends AbstractController
             'form' => $formAdd->createView(),
         ]);
     }
+
+    #[Route('/admin/structure/delete/{id}', name:'app_admin_structure_delete', methods: ['GET', 'POST'])]
+    public function DeleteStructure(Structure $structure, Request $request): Response
+    {
+        if ($this->isCsrfTokenValid('delete_structure' . $structure->getId(), $request->get('_token'))) {
+            $this->em->remove($structure);
+            $this->em->flush();
+            $this->addFlash('success_structure', 'La structure à bien été supprimer.');
+        }
+        return $this->redirectToRoute('app_admin_structure');
+    }
 }

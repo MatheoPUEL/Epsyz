@@ -45,6 +45,16 @@
                 <td>{{ structure.type }}</td>
                 <td>{% if structure.public == 0 %}<i class="fa-solid fa-circle-xmark not"></i>{% else %}<i class="fa-solid fa-circle-check valid"></i>{% endif %}</td>
                 <td><a href="{{ path('app_admin_structure_edit', { id: structure.id }) }}" class="btn-secondary btn btn-sm">Modifer</a></td>
+                <td>
+                    <form method="post" action="{{ path('app_admin_structure_delete', { id: structure.id} ) }}" style="display: inline-block">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete_structure' ~ structure.id) }}">
+                        <button class="btn btn-danger btn-sm btn-square btn-neutral me-1">
+                            <i class="fa-solid fa-trash"></i>
+                            Supprimer
+                        </button>
+                    </form>
+                </td>
             </tr>
         {% endfor %}
 

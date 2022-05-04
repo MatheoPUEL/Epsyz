@@ -16,6 +16,8 @@
                 {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('app_admin') }}">Page admin</a>
                 {% endif %}
+            {% else %}
+                <a href="{{ path('app_user', {id}) }}">Revenir sur mon profil</a>
             {% endif %}
 
         {% else %}
