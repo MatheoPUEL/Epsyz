@@ -3,28 +3,39 @@
 {% block title %}Confirmation | Epsyz{% endblock %}
 
 {% block body %}
+
     <div class="container">
-        {% if user.confirme == 0%}
-            Recevoir un email pour confirmer votre compte
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                <div class="card border-0 shadow rounded-3 my-5">
+                    <div class="card-body p-4 p-sm-5">
+                        <h5 class="card-title mb-3 fw-light fs-5">Confirmez votre compte maintenant</h5>
+                        {% if user.confirme == 0%}
+                            <p>Recevez un email pour confirmer votre compte</p>
 
 
-            {% for message in app.flashes('success') %}
-                <div class="alert alert-success">
-                    {{ message }}
+                            {% for message in app.flashes('success') %}
+                                <div class="alert alert-success">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+
+                            <form method="post" action="{{ path('app_confirm_account') }}" style="display: inline-block">
+                                <input type="hidden" name="_method" value="POST">
+                                <input type="hidden" name="_token" value="{{ csrf_token('send_confirmation') }}">
+                                <button class="btn btn-primary">
+                                    Envoyer
+                                </button>
+                            </form>
+
+                        {% else %}
+                            <h5>Votre compte est déjà été confirmé.</h5>
+                            <a href="{{ path('app_user_edit') }}">Retournez sur votre profil</a>
+                        {% endif %}
+                    </div>
                 </div>
-            {% endfor %}
-
-            <form method="post" action="{{ path('app_confirm_account') }}" style="display: inline-block">
-                <input type="hidden" name="_method" value="POST">
-                <input type="hidden" name="_token" value="{{ csrf_token('send_confirmation') }}">
-                <button class="">
-                    Envoyer
-                </button>
-            </form>
-
-        {% else %}
-            <h1>Votre compte est déjà été confirmé.</h1>
-        {% endif %}
+            </div>
+        </div>
     </div>
 
 {% endblock %}

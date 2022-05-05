@@ -3,18 +3,50 @@
 {% block title %}Inscription | Epsyz{% endblock %}
 
 {% block body %}
-
-    <div class="container mt-4">
-        <h1 class="h3 mb-3 font-weight-normal">Inscription</h1>
-        {{ form_start(registrationForm) }}
-            {{ form_row(registrationForm.last_name) }}
-            {{ form_row(registrationForm.first_name) }}
-            {{ form_row(registrationForm.email) }}
-            {{ form_row(registrationForm.plainPassword) }}
-            {{ form_row(registrationForm.agreeTerms) }}
-
-            <button type="submit" class="btn btn-primary">Register</button>
-        {{ form_end(registrationForm) }}
+    <style>
+        .btn-google {
+            color: white !important;
+            background-color: #ea4335;
+        }
+    </style>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                <div class="card border-0 shadow rounded-3 my-5">
+                    <div class="card-body p-4 p-sm-5">
+                        <h5 class="card-title mb-5 fw-light fs-5">S'inscrire</h5>
+                        {{ form_start(registrationForm) }}
+                            <div class="mb-1">
+                                <div class="row">
+                                    <div class="col">
+                                        {{ form_row(registrationForm.first_name) }}
+                                    </div>
+                                    <div class="col">
+                                        {{ form_row(registrationForm.last_name) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                {{ form_row(registrationForm.email) }}
+                            </div>
+                            <div class="mb-3">
+                                {{ form_row(registrationForm.plainPassword) }}
+                            </div>
+                            {{ form_row(registrationForm.agreeTerms) }}
+                            <div class="d-grid">
+                                <button class="btn btn-primary text-uppercase" type="submit">S'inscrire</button>
+                            </div>
+                            <hr class="my-4">
+                            <div class="d-grid mb-2">
+                                <button class="btn btn-google btn-login text-uppercase" type="submit">
+                                    <i class="fab fa-google me-2"></i> S'inscrire avec Google
+                                </button>
+                            </div>
+                        {{ form_end(registrationForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 {% endblock %}
