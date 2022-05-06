@@ -43,19 +43,15 @@ class AccountController extends AbstractController
 
             // Permet la suppresion de l'avatar.
             if ($this->isCsrfTokenValid('delete_picture' . $userInfos->getId(), $request->get('_token'))) {
-
+                $path = "uploads/avatar/" . $userInfos->getAvatarToken();
                 if ($userInfos->getAvatarToken() != "default.png") {
-                    $path = "uploads/avatar/" . $userInfos->getAvatarToken();
-                    if (!unlink($path)) {
-                        return $this->redirectToRoute('app_user_edit');
-                    } else {
+                        unlink($path);
                         $user->setAvatarToken('default.png');
                         $user->setUpdatedAt(new \DateTimeImmutable('now'));
                         $this->em->persist($user);
                         $this->em->flush();
                         $this->addFlash('success_avatar', 'Votre imge de profil a bien été supprimer.');
                         return $this->redirectToRoute('app_user_edit');
-                    }
                 }
 
 
@@ -117,6 +113,11 @@ class AccountController extends AbstractController
             $formUpdateAvatar->handleRequest($request);
 
             if ($formUpdateAvatar->isSubmitted() && $formUpdateAvatar->isValid()) {
+                    $UserAvatarToken = $userInfos->getAvatarToken();
+                    if ($UserAvatarToken != "default.png") {
+                        $path = "uploads/avatar/" . $UserAvatarToken;
+                        unlink($path);
+                    }
                     $file = $formUpdateAvatar->get('AvatarToken')->getData();
                     $uniqid = md5(uniqid());
                     $fileName = $uniqid.'.'.$file->guessExtension();

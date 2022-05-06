@@ -18,7 +18,7 @@
 
     </div>
 
-    <div class="container shadow-lg p-3 mb-5 bg-body rounded">
+    <div class="container shadow-lg p-3 mb-5 bg-body rounded border">
         <h1>Mes informations</h1>
         <p class="text-muted">Dernnière modification le {{ user.updatedat|date("d/m/Y") }} a {{ user.updatedat|date("H:i") }}</p>
         {% if id is defined %}
@@ -46,7 +46,7 @@
         {{ form_end(form_update) }}
     </div>
 
-    <div class="container shadow-lg p-3 mb-5 bg-body rounded">
+    <div class="container shadow-lg p-3 mb-5 bg-body rounded border">
         <h1>Image de profil</h1>
         {% for message in app.flashes('success_avatar') %}
             <div class="alert alert-success alert-dismissible fade show">
@@ -70,7 +70,7 @@
         {% endif %}
     </div>
 
-    <div class="container shadow-lg p-3 mb-5 bg-body rounded">
+    <div class="container shadow-lg p-3 mb-5 bg-body rounded border">
         <h1>Mot de passe</h1>
         {% for message in app.flashes('success_pass') %}
             <div class="alert alert-success alert-dismissible fade show">

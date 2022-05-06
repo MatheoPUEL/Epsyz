@@ -62,15 +62,12 @@ class AdminUserController extends AbstractController
 
                 if ($user->getAvatarToken() != "default.png") {
                     $path = "uploads/avatar/" . $user->getAvatarToken();
-                    if (!unlink($path)) {
-                        return $this->redirectToRoute('/admin/user/show/' . $id);
-                    } else {
+                        unlink($path);
                         $user->setAvatarToken('default.png');
                         $this->em->persist($user);
                         $this->em->flush();
-                        $this->addFlash('success_avatar', 'L\'image a bine été supprimer');
+                        $this->addFlash('success_avatar', 'L\'image a bien été supprimer');
                         return $this->redirect('/admin/user/show/' . $id);
-                    }
                 }
 
 

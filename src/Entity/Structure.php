@@ -10,7 +10,7 @@ class Structure
 {
     const TYPE = [
         0 => 'E.P.H.A.D / Maison de retraite',
-        1 => 'Hôpitaux',
+        1 => 'Hôpital',
         2 => 'U.S.L.D ( Unité de Soins Longues durée )',
     ];
     #[ORM\Id]

@@ -11,7 +11,6 @@
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://kit.fontawesome.com/d02eba9fbf.js" crossorigin="anonymous"></script>
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             <link rel="stylesheet" href="https://www.epsyz.xyz/assets/css/style.css">
         {% endblock %}
@@ -24,21 +23,17 @@
     <body>
 
     <header class="navbar-light navbar-sticky header-static border-bottom navbar-dashboard">
-        <!-- Logo Nav START -->
         <nav class="navbar navbar-expand-xl">
             <div class="container">
-                <!-- Logo START -->
                 <a class="navbar-brand me-3" href="{{ path('app_home') }}">
                     <img class="navbar-brand-item light-mode-item" src="assets/images/logo.svg" alt="logo">
                     <img class="navbar-brand-item dark-mode-item" src="assets/images/logo-light.svg" alt="logo">
                 </a>
-                <!-- Responsive navbar toggler -->
                 <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="text-body h6 d-none d-sm-inline-block">Menu</span>
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <!-- Main navbar START -->
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav navbar-nav-scroll mx-auto">
                         <li class="nav-item">
@@ -51,21 +46,15 @@
                         {% endif %}
                     </ul>
                 </div>
-                <!-- Main navbar END -->
 
-                <!-- Nav right START -->
                 <div class="nav flex-nowrap align-items-center">
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                        <!-- Notification dropdown START -->
                         <div class="nav-item ms-2 ms-md-3 dropdown">
-                            <!-- Notification button -->
                             <a class="btn btn-primary-soft btn-round mb-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
                                 <i class="fa-solid fa-bell"></i>
                             </a>
-                            <!-- Notification dote -->
                             <span class="notif-badge animation-blink"></span>
 
-                            <!-- Notification dropdown menu START -->
                             <div class="dropdown-menu dropdown-animation dropdown-menu-end dropdown-menu-size-md p-0 shadow-lg border-0">
                                 <div class="card bg-transparent">
                                     <div class="card-header bg-transparent border-bottom p-3 d-flex justify-content-between align-items-center">
@@ -91,27 +80,20 @@
 
                                         </ul>
                                     </div>
-                                    <!-- Button -->
                                     <div class="card-footer bg-transparent border-0 py-3 text-center position-relative">
                                         <a href="#" class="stretched-link">Voir toutes les notifications</a>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Notification dropdown menu END -->
                         </div>
-                        <!-- Notification dropdown END -->
                         <div class="nav-item ms-2 ms-md-3 dropdown">
-                            <!-- Avatar -->
                             <a class="avatar avatar-sm p-0" href="#" id="profileDropdown" role="button" data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img class="avatar-img rounded-circle" src="/uploads/avatar/{{ app.user.avatartoken }}" alt="avatar">
                             </a>
 
-                            <!-- Profile dropdown START -->
                             <ul class="dropdown-menu dropdown-animation dropdown-menu-end shadow pt-3" aria-labelledby="profileDropdown">
-                                <!-- Profile info -->
                                 <li class="px-3">
                                     <div class="d-flex align-items-center">
-                                        <!-- Avatar -->
                                         <div class="avatar me-3">
                                             <img class="avatar-img rounded-circle shadow" src="/uploads/avatar/{{ app.user.avatartoken }}" alt="avatar">
                                         </div>
@@ -122,27 +104,24 @@
                                     </div>
                                     <hr>
                                 </li>
-                                <!-- Links -->
                                 <li><a class="dropdown-item" href="{{ path('app_user', {id: app.user.id}) }}"><i class="fa-solid fa-user"></i> &#160;Mon profil</a></li>
                                 <li><a class="dropdown-item" href="{{ path('app_user_edit') }}"><i class="fa-solid fa-gear"></i> &#160;Editier votre profil</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-circle-info"></i> &#160;Besoins d'aide ?</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-circle-info"></i> &#160;Besoin d'aide ?</a></li>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li><a class="dropdown-item" href="{{ path('app_admin') }}"><i class="fa-solid fa-shield"></i> &#160;Page admin</a></li>
+                                {% endif %}
                                 <li class="dropdown-divider"></li>
                                 <li><a class="dropdown-item bg-danger-soft-hover" href="{{ path('app_logout') }}"><i class="fa-solid fa-right-from-bracket"></i> &#160;Se deconnecter</a></li>
                             </ul>
-                            <!-- Profile dropdown END -->
                         </div>
                     {% else %}
                         <a href="{{ path('app_login') }}" class="btn btn-primary me-2">Se connecter</a>
                         <a href="{{ path('app_register') }}" class="btn btn-outline-primary">S'inscrire</a>
                     {% endif %}
 
-                    <!-- Profile dropdown END -->
-
-                    <!-- Nav right END -->
                 </div>
             </div>
         </nav>
-        <!-- Logo Nav END -->
     </header>
         {% block body %}{% endblock %}
     </body>

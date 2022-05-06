@@ -45,6 +45,14 @@ class StructureRepository extends ServiceEntityRepository
         }
     }
 
+    public function CountAllStructure(): array
+    {
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u.id) as value')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     // /**
     //  * @return Structure[] Returns an array of Structure objects
     //  */

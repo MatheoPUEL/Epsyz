@@ -1,4 +1,4 @@
-{% extends 'admin/base.html.twig' %}
+{% extends 'admin/index.html.twig' %}
 
 {% block title %}Admin | Structures{% endblock %}
 
@@ -11,54 +11,148 @@
             color: red;
         }
     </style>
-<div class="container">
-    <a href="{{ path('app_admin_structure_add') }}" class="btn btn-primary">Ajouter une structure</a>
-    {% for message in app.flashes('success_structure') %}
-        <div class="alert alert-success alert-dismissible fade show mt-4">
-            {{ message }}
+
+    <div class="container-fluid px-0">
+        <div class="page-wrapper">
+            {{ include('admin/navbar.html.twig') }}
+            <div class="main-content">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="container">
+                            <div class="my-5">
+                                <h2>Page admin / Structure</h2>
+                            </div>
+                            {% for message in app.flashes('success_structure') %}
+                                <div class="alert alert-success alert-dismissible fade show mt-4">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+
+                            <div class="col-12 mt-4">
+                                <!-- Blog list table START -->
+                                <div class="card border bg-transparent rounded-3">
+                                    <!-- Card header START -->
+                                    <div class="card-header bg-transparent border-bottom p-3">
+                                        <div class="d-sm-flex justify-content-between align-items-center">
+                                            <h5 class="mb-2 mb-sm-0">Structure</h5>
+                                            <a href="{{ path('app_admin_structure_add') }}" class="btn btn-sm btn-primary mb-0">Ajouter une structure</a>
+                                        </div>
+                                    </div>
+                                    <!-- Card header END -->
+
+                                    <!-- Card body START -->
+                                    <div class="card-body">
+
+                                        <!-- Search and select START -->
+                                        <div class="row g-3 align-items-center justify-content-between mb-3">
+                                            <div class="col-md-8">
+                                                <form class="rounded position-relative">
+                                                    <input class="form-control pe-5 bg-transparent" type="search" placeholder="Rechercher" aria-label="Search">
+                                                    <button class="btn bg-transparent px-2 py-0 position-absolute top-50 end-0 translate-middle-y" type="submit"><i class="fas fa-search fs-6 "></i></button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <!-- Search and select END -->
+
+                                        <!-- Blog list table START -->
+                                        <div class="table-responsive border-0">
+                                            <table class="table align-middle p-4 mb-0 table-hover table-shrink">
+                                                <!-- Table head -->
+                                                <thead class="table-dark">
+                                                <tr>
+                                                    <th scope="col" class="border-0 rounded-start">Nom</th>
+                                                    <th scope="col" class="border-0">Ville</th>
+                                                    <th scope="col" class="border-0">Code postal</th>
+                                                    <th scope="col" class="border-0">Adresse</th>
+                                                    <th scope="col" class="border-0">Telephone</th>
+                                                    <th scope="col" class="border-0">Mail</th>
+                                                    <th scope="col" class="border-0">Type</th>
+                                                    <th scope="col" class="border-0">Public</th>
+                                                    <th scope="col" class="border-0 rounded-end">Actions</th>
+                                                </tr>
+                                                </thead>
+                                                <!-- Table body START -->
+                                                <tbody class="border-top-0">
+                                                <!-- Table item -->
+                                                {% for structure in structures %}
+                                                    <tr>
+                                                        <!-- Table data -->
+                                                        <td>
+                                                            {{ structure.name }}
+                                                        </td>
+                                                        <!-- Table data -->
+                                                        <td>
+                                                            {{ structure.city }}
+                                                        </td>
+                                                        <!-- Table data -->
+                                                        <td>
+                                                            {{ structure.postalcode }}
+                                                        </td>
+                                                        <!-- Table data -->
+                                                        <td>
+                                                            {{ structure.address }}
+                                                        </td>
+                                                        <!-- Table data -->
+                                                        <td>
+                                                            {{ structure.phone }}
+                                                        </td>
+                                                        <!-- Table data -->
+                                                        <td>
+                                                            {{ structure.mail }}
+                                                        </td>
+                                                        <td>
+                                                            {{ structure.type }}
+                                                        </td>
+                                                        <td>
+                                                            {% if structure.public == 0 %}<i class="fa-solid fa-circle-xmark not"></i>{% else %}<i class="fa-solid fa-circle-check valid"></i>{% endif %}
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ path('app_admin_structure_edit', { id: structure.id }) }}" class="btn-secondary btn btn-sm"><i class="fa-solid fa-pencil"></i></a>
+
+                                                            <form method="post" action="{{ path('app_admin_structure_delete', { id: structure.id} ) }}" style="display: inline-block">
+                                                                <input type="hidden" name="_method" value="DELETE">
+                                                                <input type="hidden" name="_token" value="{{ csrf_token('delete_structure' ~ structure.id) }}">
+                                                                <button class="btn btn-danger btn-sm btn-square btn-neutral me-1">
+                                                                    <i class="fa-solid fa-trash"></i>
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                                <!-- Table body END -->
+                                            </table>
+                                        </div>
+                                        <!-- Blog list table END -->
+
+                                        <!-- Pagination START -->
+                                        <div class="d-sm-flex justify-content-sm-between align-items-sm-center mt-4 mt-sm-3">
+                                            <nav class="mb-sm-0 d-flex justify-content-center" aria-label="navigation">
+                                                <ul class="pagination pagination-sm pagination-bordered mb-0">
+                                                    <li class="page-item disabled">
+                                                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Prev</a>
+                                                    </li>
+                                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                                    <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                                                    <li class="page-item disabled"><a class="page-link" href="#">..</a></li>
+                                                    <li class="page-item"><a class="page-link" href="#">15</a></li>
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="#">Next</a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                        <!-- Pagination END -->
+                                    </div>
+                                </div>
+                                <!-- Blog list table END -->
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    {% endfor %}
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Ville</th>
-            <th>Code postal</th>
-            <th>Adresse</th>
-            <th>Téléphone</th>
-            <th>Mail</th>
-            <th>Type</th>
-            <th>Public</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        {% for structure in structures %}
-            <tr>
-                <td>{{ structure.name }}</td>
-                <td>{{ structure.city }}</td>
-                <td>{{ structure.postalcode }}</td>
-                <td>{{ structure.address }}</td>
-                <td>{{ structure.phone }}</td>
-                <td>{{ structure.mail }}</td>
-                <td>{{ structure.type }}</td>
-                <td>{% if structure.public == 0 %}<i class="fa-solid fa-circle-xmark not"></i>{% else %}<i class="fa-solid fa-circle-check valid"></i>{% endif %}</td>
-                <td><a href="{{ path('app_admin_structure_edit', { id: structure.id }) }}" class="btn-secondary btn btn-sm">Modifer</a></td>
-                <td>
-                    <form method="post" action="{{ path('app_admin_structure_delete', { id: structure.id} ) }}" style="display: inline-block">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <input type="hidden" name="_token" value="{{ csrf_token('delete_structure' ~ structure.id) }}">
-                        <button class="btn btn-danger btn-sm btn-square btn-neutral me-1">
-                            <i class="fa-solid fa-trash"></i>
-                            Supprimer
-                        </button>
-                    </form>
-                </td>
-            </tr>
-        {% endfor %}
-
-
-        </tbody>
+    </div>
 
 {% endblock %}

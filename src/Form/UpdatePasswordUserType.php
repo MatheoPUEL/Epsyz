@@ -29,8 +29,8 @@ class UpdatePasswordUserType extends AbstractType
                     'max' => 255,
                 ]),
             ],
-            'first_options' => ['label' => false, 'attr' => [...$htmlAttr, ...['placeholder' => 'Nouveau mot de passe']]],
-            'second_options' => ['label' => false, 'attr' => [...$htmlAttr, ...['placeholder' => 'Confirmer le mot de passe']]],
+            'first_options' => ['label' => 'Nouveau mot de passe', 'attr' => [...$htmlAttr, ...['placeholder' => false]]],
+            'second_options' => ['label' => 'Confirmer le mot de passe', 'attr' => [...$htmlAttr, ...['placeholder' => false]]],
         ]);
     }
 
